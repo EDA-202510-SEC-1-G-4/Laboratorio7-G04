@@ -80,6 +80,6 @@ def remove(map,key):
             elm["key"] = "__EMPTY__"
             elm["value"] = "__EMPTY__"
     return map
-                    
+
 def size(map):
     return map["size"]
