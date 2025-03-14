@@ -71,7 +71,7 @@ def new_logic():
     catalog['books_by_year_author'] = None #TODO completar la creación del mapa
     
     return catalog
-#...
+
 #  -------------------------------------------------------------
 # Funciones para la carga de datos
 #  -------------------------------------------------------------
