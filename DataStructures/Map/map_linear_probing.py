@@ -23,10 +23,9 @@ def rehash(my_map):
     resized = new_map(num,factores=0.5,primo=1093598347)
     elements = my_map['table']['elements']
     for element in elements:
-        if element['key'] != None:
-            llave = element['key']
-            valor = element['value']
-            put(resized,llave,valor)
+        llave = element['key']
+        valor = element['value']
+        put(resized,llave,valor)
     return resized
 
 def put(my_map, key, value):
