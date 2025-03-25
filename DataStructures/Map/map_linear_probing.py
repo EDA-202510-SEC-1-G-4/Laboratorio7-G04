@@ -1,4 +1,4 @@
-import map_functions as mp
+from DataStructures.Map import map_functions as mp
 
 def new_map(num, factores=0.5, primo=1093598347):
     mapa = {}

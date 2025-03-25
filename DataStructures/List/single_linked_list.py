@@ -72,13 +72,6 @@ def first_element (my_list):
 def is_empty (my_list):
     return my_list["size"] == 0
 
-def get_last_element (my_list):
-    return my_list["last"]["info"]
-
-def remove_first (my_list):
-    my_list["first"]["next"] = None
-    my_list ["first"] = my_list["first"]["next"]
-    return my_list
 
 def remove_first(my_list):
 
