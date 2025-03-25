@@ -1,18 +1,21 @@
 import map_functions as mp
+from DataStructures.List import single_linked_list as lists
 
-def new_map(num, factores=0.5, primo=1093598347):
+def new_map(num, factor=4, primo=109345121):
     mapa = {}
     mapa["prime"] = primo
-    mapa["capacity"] = num
+    cantidad_buckets = (num//factor) + (num%factor)
+    mapa["capacity"] = cantidad_buckets
     mapa["scale"] = 1
     mapa["shift"] = 0
     mapa["table"] = {}
     mapa["table"]["size"] = num
     mapa["table"]["elements"] = []
-    for i in range (num+1):
-        mapa["table"]["elements"].append({"Key": None, "Value": None})
+    for i in range (cantidad_buckets+1):
+        lista = lists.new_list()
+        mapa["table"]["elements"].append(lista)
         
-    mapa["limit_factor"]= factores
+    mapa["limit_factor"]= factor
     mapa ["size"] = 0
     mapa["current_factor"] = 0
     return mapa
