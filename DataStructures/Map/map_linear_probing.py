@@ -1,11 +1,6 @@
+import map_functions as mp
 
-def hash(map, key):
-    return int(abs(hash(key) % map["capacity"]))
-
-def rehash(map, old_hash):
-    return (old_hash + 1) % map["capacity"]
-
-def new_map(num, factores=0, primo=1093598347):
+def new_map(num, factores=0.5, primo=1093598347):
     mapa = {}
     mapa["prime"] = primo
     mapa["capacity"] = num
@@ -22,9 +17,17 @@ def new_map(num, factores=0, primo=1093598347):
     mapa["current_factor"] = 0
     return mapa
 
+def rehash(my_map):
+    capacity = int(my_map['capacity'])
+    num = mp.next_prime(capacity*2)
+    resized = new_map(num,factores=0.5,primo=1093598347)
+    elements = my_map['table']['elements']
+    for element in elements:
+        return 0
 
-def put(self, my_map, key, value):
-        hash_value = self._hash(key)
+
+def put(my_map, key, value):
+        hash_value = mp.hash_value(my_map, key)
         found = False
         first_avail = None
         
@@ -37,7 +40,7 @@ def put(self, my_map, key, value):
             elif my_map['table'][hash_value]['key'] == key:
                 my_map['table'][hash_value]['value'] = value
                 return my_map
-            
+ 
             hash_value = (hash_value + 1) % my_map['capacity']
         
         my_map['table'][first_avail] = {'key': key, 'value': value}
@@ -45,7 +48,7 @@ def put(self, my_map, key, value):
         my_map['current_factor'] = my_map['size'] / my_map['capacity']
         
         if my_map['current_factor'] >= my_map['limit_factor']:
-            self._resize(my_map)
+            return 0
         
         return my_map
 
