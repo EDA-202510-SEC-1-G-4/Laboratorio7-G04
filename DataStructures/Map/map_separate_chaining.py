@@ -10,7 +10,7 @@ def new_map(num, factor=4, primo=109345121):
     mapa["shift"] = 0
     mapa["table"] = {}
     mapa["table"]["size"] = num
-    mapa["table"]["elements"] = []
+    mapa["table"]["elements"] = [] 
     for i in range (cantidad_buckets+1):
         lista = lists.new_list()
         mapa["table"]["elements"].append(lista)
@@ -21,7 +21,13 @@ def new_map(num, factor=4, primo=109345121):
     return mapa
 
 def rehash(my_map):
-    return 0
+    capacity = int(my_map['capacity'])
+    num = mp.next_prime(capacity*2)
+    resized = new_map(num,factores=4,primo=109345121)
+    elements = my_map['table']['elements']
+    for element in elements:
+        put(resized,llave,valor)
+    return resized
 
 def put(my_map, key, value):
     return 0
