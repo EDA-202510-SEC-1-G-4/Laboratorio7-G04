@@ -23,8 +23,11 @@ def rehash(my_map):
     resized = new_map(num,factores=0.5,primo=1093598347)
     elements = my_map['table']['elements']
     for element in elements:
-        return 0
-
+        if element['key'] != None:
+            llave = element['key']
+            valor = element['value']
+            put(resized,llave,valor)
+    return resized
 
 def put(my_map, key, value):
         hash_value = mp.hash_value(my_map, key)
@@ -48,8 +51,8 @@ def put(my_map, key, value):
         my_map['current_factor'] = my_map['size'] / my_map['capacity']
         
         if my_map['current_factor'] >= my_map['limit_factor']:
-            return 0
-        
+            my_map = rehash(my_map)
+
         return my_map
 
 def contains(map, key):
