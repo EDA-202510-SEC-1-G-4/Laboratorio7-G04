@@ -14,12 +14,10 @@ def new_map(num, factor=4, primo=109345121):
     mapa["capacity"] = cantidad_buckets
     mapa["scale"] = 1
     mapa["shift"] = 0
-    mapa["table"] = {}
-    mapa["table"]["size"] = num
-    mapa["table"]["elements"] = [] 
+    mapa["table"] = al.new_list()
     for i in range (cantidad_buckets+1):
         lista = sl.new_list()
-        mapa["table"]["elements"].append(lista)
+        al.add_last(mapa["table"],lista)
         
     mapa["limit_factor"]= factor
     mapa ["size"] = 0
