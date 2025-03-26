@@ -1,20 +1,52 @@
 from DataStructures.Map import map_functions as mp
 from DataStructures.List import array_list as al
+from DataStructures.Map import map_entry as me
 
 def new_map(num, factores=0.5, primo=109345121):
     mapa = {}
     mapa["prime"] = primo
-    mapa["capacity"] = mp.next_prime(num*2)
+    mapa["capacity"] = num 
     mapa["scale"] = 1
     mapa["shift"] = 0
     mapa["table"] = al.new_list()
     for i in range (num+1):
-        al.add_last(mapa["table"],{"Key": None, "Value": None})
+        al.add_last(mapa["table"],{"key": None, "value": None})
 
     mapa["limit_factor"]= factores
     mapa ["size"] = 0
     mapa["current_factor"] = 0
     return mapa
+
+def default_compare(key, entry):
+   if key == me.get_key(entry):
+      return 0
+   elif key > me.get_key(entry):
+      return 1
+   return -1
+
+def is_available(table, pos):
+   entry = al.get_element(table, pos)
+   if me.get_key(entry) is None or me.get_key(entry) == "__EMPTY__":
+      return True
+   return False
+
+def find_slot(my_map, key, hash_value):
+   first_avail = None
+   found = False
+   ocupied = False
+   while not found:
+      if is_available(my_map["table"], hash_value):
+            if first_avail is None:
+               first_avail = hash_value
+            entry = al.get_element(my_map["table"], hash_value)
+            if me.get_key(entry) is None:
+               found = True
+      elif default_compare(key, al.get_element(my_map["table"], hash_value)) == 0:
+            first_avail = hash_value
+            found = True
+            ocupied = True
+      hash_value = (hash_value + 1) % my_map["capacity"]
+   return ocupied, first_avail
 
 def rehash(my_map):
     capacity = int(my_map['capacity'])
@@ -22,36 +54,33 @@ def rehash(my_map):
     resized = new_map(num,factores=0.5,primo=1093598347)
     elements = my_map['table']['elements']
     for element in elements:
-        llave = element['key']
-        valor = element['value']
-        put(resized,llave,valor)
+        if element['key'] != None and element['value'] != None:
+            llave = element['key']
+            valor = element['value']
+            put(resized,llave,valor)
     return resized
 
-def put(my_map, key, value):
-        hash_value = mp.hash_value(my_map, key)
-        found = False
-        first_avail = None
-        
-        while not found:
-            if my_map['table'][hash_value]['key'] is None or my_map['table'][hash_value]['key'] == "__EMPTY__":
-                if first_avail is None:
-                    first_avail = hash_value
-                if my_map['table'][hash_value]['key'] is None:
-                    found = True
-            elif my_map['table'][hash_value]['key'] == key:
-                my_map['table'][hash_value]['value'] = value
-                return my_map
- 
-            hash_value = (hash_value + 1) % my_map['capacity']
-        
-        my_map['table'][first_avail] = {'key': key, 'value': value}
+def put(my_map,key,value):
+    pos = mp.hash_value(my_map,key)%my_map['table']['size']
+    pos_key = my_map['table']['elements'][pos]['key']
+    if pos_key == None or pos_key == "__EMPTY__":
+        al.change_info(my_map['table']['elements'],pos,{'key':key,'value':value})
         my_map['size'] += 1
-        my_map['current_factor'] = my_map['size'] / my_map['capacity']
-        
-        if my_map['current_factor'] >= my_map['limit_factor']:
-            my_map = rehash(my_map)
-
-        return my_map
+        my_map['current_factor'] = round(my_map['size'] / my_map['table']['size'], 2)
+    elif pos_key == key:
+        al.change_info(my_map['table']['elements'],pos,{'key':key,'value':value})
+        my_map['current_factor'] = round(my_map['size'] / my_map['table']['size'], 2)
+    else:
+        boolx, pos = find_slot(my_map,key,mp.hash_value(my_map,key))
+        pos_key = my_map['table']['elements'][pos]['key']
+        if pos_key == key:
+            al.change_info(my_map['table']['elements'],pos,{'key':key,'value':value})
+            my_map['current_factor'] = round(my_map['size'] / my_map['table']['size'], 2)
+        elif not boolx:
+            al.change_info(my_map['table']['elements'],pos,{'key':key,'value':value})
+    if my_map['current_factor'] >= my_map['limit_factor']:
+        my_map = rehash(my_map)
+    return my_map
 
 def contains(map, key):
     cont = False
