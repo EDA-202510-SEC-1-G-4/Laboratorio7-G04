@@ -1,17 +1,16 @@
 from DataStructures.Map import map_functions as mp
+from DataStructures.List import array_list as al
 
-def new_map(num, factores=0.5, primo=1093598347):
+def new_map(num, factores=0.5, primo=109345121):
     mapa = {}
     mapa["prime"] = primo
-    mapa["capacity"] = num
+    mapa["capacity"] = mp.next_prime(num*2)
     mapa["scale"] = 1
     mapa["shift"] = 0
-    mapa["table"] = {}
-    mapa["table"]["size"] = num
-    mapa["table"]["elements"] = []
+    mapa["table"] = al.new_list()
     for i in range (num+1):
-        mapa["table"]["elements"].append({"Key": None, "Value": None})
-        
+        al.add_last(mapa["table"],{"Key": None, "Value": None})
+
     mapa["limit_factor"]= factores
     mapa ["size"] = 0
     mapa["current_factor"] = 0

@@ -1,20 +1,23 @@
 from DataStructures.Map import map_functions as mp
 from DataStructures.Map import map_entry as me
 from DataStructures.List import single_linked_list as sl
+from DataStructures.List import array_list as al
 
 def new_map(num, factor=4, primo=109345121):
     mapa = {}
     mapa["prime"] = primo
-    cantidad_buckets = (num//factor) + (num%factor)
+    if round((num//factor) + (num%factor)) == 0.0:
+        cantidad_buckets = 1
+    else:
+        cantidad_buckets = int(round((num//factor) + (num%factor)))
+    
     mapa["capacity"] = cantidad_buckets
     mapa["scale"] = 1
     mapa["shift"] = 0
-    mapa["table"] = {}
-    mapa["table"]["size"] = num
-    mapa["table"]["elements"] = [] 
+    mapa["table"] = al.new_list()
     for i in range (cantidad_buckets+1):
         lista = sl.new_list()
-        mapa["table"]["elements"].append(lista)
+        al.add_last(mapa["table"],lista)
         
     mapa["limit_factor"]= factor
     mapa ["size"] = 0
@@ -24,7 +27,8 @@ def new_map(num, factor=4, primo=109345121):
 def rehash(my_map):
     capacity = int(my_map['capacity'])
     num = mp.next_prime(capacity*2)
-    resized = new_map(num)
+    factor = my_map["limit_factor"]
+    resized = new_map(num,factor)
     buckets = my_map['table']['elements']
     for bucket in buckets:
         for i in range(sl.size(bucket)):
@@ -39,11 +43,12 @@ def rehash(my_map):
 def put(my_map, key, value):
     hash_llave = mp.hash_value(my_map,key)
     bucket = my_map["table"]["elements"][hash_llave]
-   
+    capacidad = my_map["capacity"]
+    size = my_map["size"]
     valor = {"key":key,"value":value}
     sl.add_last(bucket,valor)
     my_map["size"] += 1
-    my_map["current_factor"] = round(size/my_map["capacity"],1)
+    my_map["current_factor"] = round(size/capacidad,1)
     if my_map["current_factor"] > my_map["limit_factor"]:
         rehash(my_map)
     return my_map
@@ -86,6 +91,35 @@ def remove(map,key):
 
 def size(map):
     return map["size"]
+
+def is_empty(map):
+    return map["size"] == 0
+
+def key_set(map):
+    buckets = map["table"]["elements"]
+    keys = al.new_list()
+    for i in range(map["capacity"]):
+        bucket = buckets[i]
+        for j in range(bucket["size"]):
+            elm = sl.get_element(bucket,j)
+            key = elm["key"]
+            al.add_last(keys,key)
+
+        
+    return keys
+
+def value_set(map):
+    buckets = map["table"]["elements"]
+    valores = al.new_list()
+    for i in range(map["capacity"]):
+        bucket = buckets[i]
+        for j in range(bucket["size"]):
+            elm = sl.get_element(bucket,j)
+            value = elm["value"]
+            al.add_last(valores,value)
+
+    return valores
+
 
 
 #no fino
