@@ -86,4 +86,8 @@ def remove(map,key):
     return map
 
 def size(map):
-    return map["size"]
+   return map["size"]
+
+
+def is_empty(map):
+   return map["size"] == 0
