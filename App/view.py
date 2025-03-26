@@ -26,10 +26,9 @@
 
 import sys
 import App.logic as logic
-# TODO Realice la importación del mapa linear probing
-# TODO Realice la importación de ArrayList como estructura de datos auxiliar para sus requerimientos
-
-
+from DataStructures.Map import map_linear_probing as lp 
+from DataStructures.List import array_list as al 
+import _tracemalloc as tracemalloc
 """
 La vista se encarga de la interacción con el usuario
 Presenta el menú de opciones y por cada selección
@@ -52,6 +51,11 @@ def load_data(control):
     """
     Solicita a la controlador que cargue los datos
     """
+    start_time = logic.getTime()  # Medir tiempo de ejecución
+    tracemalloc.start()  # Iniciar la medición de memoria
+    
+    
+    
     books, authors, tags, book_tags = logic.load_data(control)
     return books, authors, tags, book_tags
 
