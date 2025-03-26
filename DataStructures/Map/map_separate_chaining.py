@@ -86,3 +86,6 @@ def remove(map,key):
 
 def size(map):
     return map["size"]
+
+
+#no fino
