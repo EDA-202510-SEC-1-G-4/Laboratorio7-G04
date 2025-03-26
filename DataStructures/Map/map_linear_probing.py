@@ -61,7 +61,7 @@ def rehash(my_map):
     return resized
 
 def put(my_map,key,value):
-    pos = mp.hash_value(my_map,key)%my_map['table']['size']
+    pos = int(mp.hash_value(my_map,key)%my_map['table']['size'])
     pos_key = my_map['table']['elements'][pos]['key']
     if pos_key == None or pos_key == "__EMPTY__":
         al.change_info(my_map['table']['elements'],pos,{'key':key,'value':value})
