@@ -64,20 +64,20 @@ def put(my_map,key,value):
     pos = int(mp.hash_value(my_map,key)%my_map['table']['size'])
     pos_key = my_map['table']['elements'][pos]['key']
     if pos_key == None or pos_key == "__EMPTY__":
-        al.change_info(my_map['table']['elements'],pos,{'key':key,'value':value})
+        al.change_info(my_map['table'],pos,{'key':key,'value':value})
         my_map['size'] += 1
         my_map['current_factor'] = round(my_map['size'] / my_map['table']['size'], 2)
     elif pos_key == key:
-        al.change_info(my_map['table']['elements'],pos,{'key':key,'value':value})
+        al.change_info(my_map['table'],pos,{'key':key,'value':value})
         my_map['current_factor'] = round(my_map['size'] / my_map['table']['size'], 2)
     else:
         boolx, pos = find_slot(my_map,key,mp.hash_value(my_map,key))
-        pos_key = my_map['table']['elements'][pos]['key']
+        pos_key = my_map['table'][pos]['key']
         if pos_key == key:
-            al.change_info(my_map['table']['elements'],pos,{'key':key,'value':value})
+            al.change_info(my_map['table'],pos,{'key':key,'value':value})
             my_map['current_factor'] = round(my_map['size'] / my_map['table']['size'], 2)
         elif not boolx:
-            al.change_info(my_map['table']['elements'],pos,{'key':key,'value':value})
+            al.change_info(my_map['table'],pos,{'key':key,'value':value})
     if my_map['current_factor'] >= my_map['limit_factor']:
         my_map = rehash(my_map)
     return my_map
