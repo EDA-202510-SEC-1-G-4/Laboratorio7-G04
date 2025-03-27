@@ -70,8 +70,6 @@ def put(my_map, key, value):
 
 
 def default_compare(key, element):
-
-
   if (key == me.get_key(element)):
      return 0
   elif (key > me.get_key(element)):
