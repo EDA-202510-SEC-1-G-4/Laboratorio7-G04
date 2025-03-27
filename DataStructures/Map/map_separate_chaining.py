@@ -64,7 +64,7 @@ def put(my_map, key, value):
        my_map["size"] += 1
 
 
-   my_map["current_factor"] = round(size/capacidad,1)
+   my_map["current_factor"] = size/capacidad
    if my_map["current_factor"] >= my_map["limit_factor"]:
        rehash(my_map)
    return my_map

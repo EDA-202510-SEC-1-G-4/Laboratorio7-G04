@@ -136,7 +136,7 @@ def test_value_set():
 def test_rehash():
     map = mp.new_map(5, 0.5, 7)
     initial_capacity = map["capacity"]
-    for i in range(6):
+    for i in range(10):
         mp.put(map, i, i*10)
     assert map["capacity"] > initial_capacity
     for i in range(6):
