@@ -110,13 +110,13 @@ def remove(map,key):
     slot = mp.hash_value(map,key)%map['table']['size']
     if map['table']['elements'][slot]['key'] == key:
         map['table']['elements'][slot]['key'] = "__EMPTY__"
-        map['table']['elements'][slot]['key'] = None
+        map['table']['elements'][slot]['value'] = None
         map['size'] -= 1
     else:
         boolx, pos = find_slot(map,key,mp.hash_value(map,key))
         if boolx:
             map['table']['elements'][pos]['key'] = "__EMPTY__"
-            map['table']['elements'][pos]['key'] = None
+            map['table']['elements'][pos]['value'] = None
             map['size'] -= 1
     return map
 
