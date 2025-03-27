@@ -51,12 +51,12 @@ def load_data(control):
     Solicita a la controlador que cargue los datos
     """
     start = logic.getTime()  # Medir tiempo de ejecución
-    start_memory = logic.getMemory()  # Iniciar la medición de memoria
+     # Iniciar la medición de memoria
     books, authors, tags, book_tags = logic.load_data(control)
     end = logic.getTime()
-    end_memory = logic.getMemory()
+    
     delta_time = logic.deltaTime(end,start)
-    delta_memo = logic.deltaMemory(end_memory,start_memory)
+    
     print(f"El tiempo tomado fue de {delta_time} [ms] \n La memoria usada fue {delta_memo} kBytes")
     return books, authors, tags, book_tags
 
@@ -164,51 +164,51 @@ def main():
 
         elif int(inputs[0]) == 2:
             start = logic.getTime()
-            start_memory = logic.getMemory()
+           
             number = input("Ingrese el id del libro (good_read_book_id) que desea buscar: ")
             book = logic.get_book_info_by_book_id(control, number)
             end = logic.getTime()
-            end_memory = logic.getMemory()
+            
             delta_time = logic.deltaTime(end,start)
-            delta_memo = logic.deltaMemory(end_memory,start_memory)
+            
             print(f"El tiempo tomado fue de {delta_time} [ms] \n La memoria usada fue {delta_memo} kBytes")
             print_book_info(book)
 
         elif int(inputs[0]) == 3:
             start = logic.getTime()
-            start_memory = logic.getMemory()
+           
             authorname = input("Nombre del autor a buscar: ")
             author, author_book_list = logic.get_books_by_author(control, authorname)
             end = logic.getTime()
-            end_memory = logic.getMemory()
+            
             delta_time = logic.deltaTime(end,start)
-            delta_memo = logic.deltaMemory(end_memory,start_memory)
+            
             print(f"El tiempo tomado fue de {delta_time} [ms] \n La memoria usada fue {delta_memo} kBytes")
             print_books_by_author(author,author_book_list)
 
         elif int(inputs[0]) == 4:
             start = logic.getTime()
-            start_memory = logic.getMemory()
+           
             label = input("Etiqueta a buscar: ")
             book_list_by_tag = logic.get_books_by_tag(control, label)
             end = logic.getTime()
-            end_memory = logic.getMemory()
+            
             delta_time = logic.deltaTime(end,start)
-            delta_memo = logic.deltaMemory(end_memory,start_memory)
+            
             print(f"El tiempo tomado fue de {delta_time} [ms] \n La memoria usada fue {delta_memo} kBytes")
             print_books_by_tag(label, book_list_by_tag)
                  
         elif int(inputs[0]) == 5:
             start = logic.getTime()
-            start_memory = logic.getMemory()
+           
             author_name = input("Ingrese el nombre del autor que desea buscar:\n")
             pub_year = input("Ingrese la fecha de publicación que desea buscar:\n") 
 
             books_by_author_pub_year, tiempo_transcurrido, memoria_usada = logic.get_books_by_author_pub_year(control, author_name, pub_year)
             end = logic.getTime()
-            end_memory = logic.getMemory()
+            
             delta_time = logic.deltaTime(end,start)
-            delta_memo = logic.deltaMemory(end_memory,start_memory)
+            
             print(f"El tiempo tomado fue de {delta_time} [ms] \n La memoria usada fue {delta_memo} kBytes")
             print_books_by_auth_year(author_name, pub_year, books_by_author_pub_year, tiempo_transcurrido, memoria_usada)
 

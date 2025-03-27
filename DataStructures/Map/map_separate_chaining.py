@@ -37,12 +37,13 @@ def rehash(my_map):
    buckets = my_map['table']['elements']
   
    for bucket in buckets:
+       print("Santiago es gay")
        for i in range(sl.size(bucket)):
            elm = sl.get_element(bucket, i)
            key = elm["key"]
            value = elm["value"]
            put(resized, key, value)
-   resized["capacity"] = 23
+   
    return resized
 
 
