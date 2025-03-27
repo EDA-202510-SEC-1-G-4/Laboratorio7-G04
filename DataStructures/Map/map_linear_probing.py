@@ -111,25 +111,29 @@ def remove(map,key):
     if map['table']['elements'][slot]['key'] == key:
         map['table']['elements'][slot]['key'] = "__EMPTY__"
         map['table']['elements'][slot]['key'] = None
+        map['size'] -= 1
     else:
         boolx, pos = find_slot(map,key,mp.hash_value(map,key))
         if boolx:
             map['table']['elements'][pos]['key'] = "__EMPTY__"
             map['table']['elements'][pos]['key'] = None
+            map['size'] -= 1
     return map
 
 def key_set(map):
     tabla = map['table']['elements']
     keys = al.new_list()
     for pareja in tabla:
-        al.add_last(keys,pareja['key'])
+        if pareja['key'] != None and pareja['key'] != "__EMPTY__":
+            al.add_last(keys,pareja['key'])
     return keys
 
 def value_set(map):
     tabla = map['table']['elements']
     values = al.new_list()
     for pareja in tabla:
-        al.add_last(values,pareja['value'])
+        if pareja['value'] != None and pareja['value'] != "__EMPTY__":
+            al.add_last(values,pareja['value'])
     return values
 
 def size(map):
