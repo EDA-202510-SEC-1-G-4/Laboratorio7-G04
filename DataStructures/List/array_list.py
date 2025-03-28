@@ -53,7 +53,10 @@ def first_element(list):
         return list['elements'][0]
 
 def get_element(list, index):
-    return list['elements'][index]    
+    if index < size(list):
+        return list['elements'][index]    
+    else:
+        return list["elements"][size(list)-1]
     
 def is_empty(list):
     return list['size'] == 0

@@ -18,16 +18,20 @@ def new_map(num, factores=0.5, primo=109345121):
     return mapa
 
 def default_compare(key, entry):
-   if key == me.get_key(entry):
-      return 0
-   elif key > me.get_key(entry):
-      return 1
-   return -1
+   if entry is not None:
+        if key == me.get_key(entry):
+            return 0
+        elif key > me.get_key(entry):
+            return 1
+        return -1
+   else: 
+       return -1
 
 def is_available(table, pos):
-   entry = al.get_element(table, pos)
-   if me.get_key(entry) is None or me.get_key(entry) == "__EMPTY__":
-      return True
+   if pos <= al.size(table):
+        entry = al.get_element(table, pos)
+        if me.get_key(entry) is None or me.get_key(entry) == "__EMPTY__":
+            return True
    return False
 
 def find_slot(my_map, key, hash_value):
@@ -71,13 +75,15 @@ def put(my_map,key,value):
         al.change_info(my_map['table'],pos,{'key':key,'value':value})
         my_map['current_factor'] = round(my_map['size'] / my_map['table']['size'], 2)
     else:
-        boolx, pos = find_slot(my_map,key,mp.hash_value(my_map,key))
-        pos_key = my_map['table'][pos]['key']
-        if pos_key == key:
-            al.change_info(my_map['table'],pos,{'key':key,'value':value})
-            my_map['current_factor'] = round(my_map['size'] / my_map['table']['size'], 2)
-        elif not boolx:
-            al.change_info(my_map['table'],pos,{'key':key,'value':value})
+        if pos <= al.size(my_map["table"]):
+            boolx, pos = find_slot(my_map,key,mp.hash_value(my_map,key))
+            
+            pos_key = my_map['table']["elements"][pos]['key']
+            if pos_key == key:
+                al.change_info(my_map['table'],pos,{'key':key,'value':value})
+                my_map['current_factor'] = round(my_map['size'] / my_map['table']['size'], 2)
+            elif not boolx:
+                al.change_info(my_map['table'],pos,{'key':key,'value':value})
     if my_map['current_factor'] >= my_map['limit_factor']:
         my_map = rehash(my_map)
     return my_map
@@ -95,15 +101,16 @@ def get(map, key):
     res = None
     if contains(map,key):
         hash = mp.hash_value(map,key)
-        if map['table']['elements'][hash]['key'] == key:
-            res = map['table']['elements'][hash]['value'] 
-        else:
-            cent = True
-            while cent: 
-                res = map['table']['elements'][hash]['value']
-                if map['table']['elements'][hash]['key'] == key:
-                    cent = False
-            hash += 1
+        if hash <= al.size(map["table"]):
+            if map['table']['elements'][hash]['key'] == key:
+                res = map['table']['elements'][hash]['value'] 
+            else:
+                cent = True
+                while cent: 
+                    res = map['table']['elements'][hash]['value']
+                    if map['table']['elements'][hash]['key'] == key:
+                        cent = False
+                hash += 1
     return res
 
 def remove(map,key): 

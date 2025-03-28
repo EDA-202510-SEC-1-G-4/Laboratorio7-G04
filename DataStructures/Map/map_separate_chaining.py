@@ -37,7 +37,7 @@ def rehash(my_map):
    buckets = my_map['table']['elements']
   
    for bucket in buckets:
-       print("Santiago es gay")
+       
        for i in range(sl.size(bucket)):
            elm = sl.get_element(bucket, i)
            key = elm["key"]
@@ -66,7 +66,7 @@ def put(my_map, key, value):
 
    my_map["current_factor"] = size/capacidad
    if my_map["current_factor"] >= my_map["limit_factor"]:
-       rehash(my_map)
+       my_map = rehash(my_map)
    return my_map
 
 
